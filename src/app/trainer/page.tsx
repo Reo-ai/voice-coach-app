@@ -183,14 +183,20 @@ function ChapterCard({
   chapter: { id: string; title: string; summary: string; topics: string[] };
 }) {
   return (
-    <div className="rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-6 hover:border-indigo-300 transition-colors">
+    <Link
+      href={`/trainer/curriculum/${chapter.id}`}
+      className="block rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-6 hover:border-indigo-400 hover:shadow-md transition-all group"
+    >
       <div className="flex items-start gap-4">
         <div className="shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold">
           {index}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-base sm:text-lg text-neutral-900 dark:text-white">
-            {chapter.title}
+          <h3 className="font-bold text-base sm:text-lg text-neutral-900 dark:text-white flex items-center gap-2">
+            <span>{chapter.title}</span>
+            <span className="text-indigo-500 text-sm transition-transform group-hover:translate-x-0.5">
+              →
+            </span>
           </h3>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1.5 leading-relaxed">
             {chapter.summary}
@@ -206,8 +212,11 @@ function ChapterCard({
               </li>
             ))}
           </ul>
+          <div className="mt-3 text-xs font-medium text-indigo-600 dark:text-indigo-400">
+            内容を読む →
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -24,3 +24,52 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* カリキュラム本文(renderMarkdownが出力するHTMLの装飾) */
+.lesson-body h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: rgb(23 23 23);
+}
+.lesson-body h3 {
+  font-size: 1.025rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+  color: rgb(38 38 38);
+}
+.lesson-body h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: rgb(64 64 64);
+}
+.lesson-body p {
+  margin: 0.5rem 0;
+  line-height: 1.85;
+}
+.lesson-body ul,
+.lesson-body ol {
+  margin: 0.5rem 0 0.75rem;
+}
+.lesson-body strong {
+  color: rgb(67 56 202);
+  font-weight: 700;
+}
+@media (prefers-color-scheme: dark) {
+  .lesson-body h2 {
+    color: rgb(245 245 245);
+  }
+  .lesson-body h3 {
+    color: rgb(229 229 229);
+  }
+  .lesson-body h4 {
+    color: rgb(212 212 212);
+  }
+  .lesson-body strong {
+    color: rgb(165 180 252);
+  }
+}
