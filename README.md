@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ボイスコーチ
 
-## Getting Started
+初心者向けのAIボイストレーナーWebアプリ。
 
-First, run the development server:
+- 悩み相談 → 原因分析 → 練習提案 → 宿題作成 までAIが一貫してサポート
+- ブラウザだけで動く音域チェック機能(Web Audio API + pitchy)
+- Next.js 16 + TypeScript + Tailwind v4 + OpenAI API
+
+## セットアップ
+
+### 1. 依存関係のインストール
+
+```bash
+npm install
+```
+
+### 2. 環境変数
+
+`.env.example` をコピーして `.env.local` を作成し、OpenAI APIキーを設定する。
+
+```bash
+cp .env.example .env.local
+```
+
+```env
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini   # 任意。省略時は gpt-4o-mini
+```
+
+API キーは [OpenAI Platform](https://platform.openai.com/api-keys) で発行する。
+
+### 3. 開発サーバー起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 を開く。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ページ構成
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| パス | 役割 |
+|---|---|
+| `/` | ランディング(機能紹介) |
+| `/chat` | ボイスコーチAIとのチャット |
+| `/pitch` | 音域チェック(マイク使用) |
 
-## Learn More
+## 主要ファイル
 
-To learn more about Next.js, take a look at the following resources:
+| ファイル | 役割 |
+|---|---|
+| `src/lib/system-prompt.ts` | AIの指示書(GPTsから移植) |
+| `src/app/api/chat/route.ts` | OpenAIストリーミングAPI |
+| `src/components/Chat.tsx` | チャットUI |
+| `src/components/PitchDetector.tsx` | 音域検出(pitchy) |
+| `src/lib/pitch.ts` | Hz → 音名変換 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## デプロイ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Vercelが最も簡単。
 
-## Deploy on Vercel
+```bash
+npx vercel
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+環境変数 `OPENAI_API_KEY` (必須) と `OPENAI_MODEL` (任意) をVercelの設定画面で登録する。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ライセンスと注意
+
+- マイク機能はHTTPS環境必須(localhostは例外)。
+- OpenAI APIの利用料金はOpenAIアカウントから請求される。
+- 本アプリは医療・治療目的の音声トレーニング指導ではない。専門的な指導が必要な場合は専門家へ。
+
+## 今後の拡張候補
+
+- [ ] 認証(NextAuth)
+- [ ] Stripeでサブスク課金
+- [ ] 録音 → Whisperで文字起こし → AIがフィードバック
+- [ ] 練習履歴の保存
+- [ ] AI音声での返答(TTS)
